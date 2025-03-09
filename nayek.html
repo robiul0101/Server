@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <title>Document</title>
+</head>
+<body>
+  <section class="header">
+    <h2 style="width:100%">নায়েক</h2>
+   </section>
+   
+  <section class="showResult companyResult">
+    <table id="table">
+      <tr id="tR">
+         <td id="podobi" style="width:15%">পদবী</td>
+         <td id="brash"style="width:15%">ব্রাশ নম্বর</td>
+         <td id="name"style="width:70%">নাম</td>
+         <td id="mobile" style="width:10%">নাম্বার</td>
+       </tr>
+    </table>
+  </section>
+  <script>var table=document.getElementById("table");
+var brash=document.getElementById("brash");
+var podobi=document.getElementById("podobi");
+var name=document.getElementById("name");
+var mobile=document.getElementById("mobile");
+var mobile=document.getElementById("mobile");
+
+
+
+let SHEET_ID = '12hryk15SGHBvHgK5jJQLUcc73J9zTiYqhBXo_sjVanA'
+let SHEET_TITLE = 'rrf';
+let SHEET_RANGE = 'M3:P200'
+
+let FULL_URL = ('https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?sheet=' + SHEET_TITLE + '&range=' + SHEET_RANGE);
+
+fetch(FULL_URL)
+.then(res => res.text())
+.then(rep => {
+    let data = JSON.parse(rep.substr(47).slice(0,-2));
+  
+  
+    let length = data.table.rows.length;
+    
+    for(let i = 0;i<length;i++){
+      var newTr= document.createElement("tr");
+ //.....................................
+ var newPodobi = document.createElement("td");
+  newTr.appendChild(newPodobi)
+  newPodobi.innerHTML = data.table.rows[i].c[0].v;
+         table.appendChild(newTr);
+//.........................................
+var newBrash = document.createElement("td");
+  newTr.appendChild(newBrash)
+  newBrash.innerHTML = data.table.rows[i].c[1].v;
+         table.appendChild(newTr);
+//...................................
+//.........................................
+var newName = document.createElement("td");
+  newTr.appendChild(newName)
+  newName.innerHTML = data.table.rows[i].c[2].v;
+         table.appendChild(newTr);
+//...................................
+//.........................................
+//data.table.rows[i].c[3].v;
+var newMobile =document.createElement("td");
+newTr.appendChild(newMobile);
+newMobile.innerHTML="<a  class='nmbr' href='tel:>"+data.table.rows[i].c[3].v+"'/a>"+'<i class="fa-solid fa-phone-flip"></i>';
+table.appendChild(newTr);
+//...................................
+
+    }
+ 
+})</script>
+</body>
+</html>
+

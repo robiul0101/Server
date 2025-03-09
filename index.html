@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link rel="stylesheet" href="style.css">
+  <title>Document</title>
+</head>
+<body>
+  <section class="header">
+    <h2>রেঞ্জ রিজার্ভ ফোর্স (আর,আর,এফ), ঢাকা। </h2>
+    <input onkeyup="searchRslt()" id="srcFld" type="number" class="searchVal" placeholder="ব্রাশ নাম্বার লিখুন">
+    <button onclick="findBrash()">খুজুন</button>
+  </section>
+  <section class="division">
+    <a href="official.html">অফিসিয়াল নাম্বার</a>
+    <a href="si.html">এস আই</a>
+    <a href="asi.html">এ এস আই</a>
+    <a href="nayek.html">নায়েক</a>
+    <a href="constable.html">কনস্টেবল</a>
+    <a href="https://www.cafopfm.gov.bd/">জিপিএফ ফান্ড চেক</a>
+  </section>
+  <section class="showResult">
+       <table id="table">
+      <tr id="tR">
+         <td id="podobi" style="width:20%">পদবী</td>
+         <td id="brash"style="width:15%">ব্রাশ নম্বর</td>
+         <td id="name"style="width:70%">নাম</td>
+         <td id="mobile" style="width:10%">নাম্বার</td>
+       </tr>
+    </table>
+  </section>
+  <section class="footer">
+    <h4>  Developed by  </h4>
+    <h3>Md Robiul Hasan</h3>
+    <h5> (RRF, Dhaka)</h5>
+  </section>
+  <script> 
+  var searchVal= document.querySelector(".searchVal");
+var showResult = document.querySelector(".showResult");
+var division = document.querySelector(".division");
+var table=document.getElementById("table");
+var brash=document.getElementById("brash");
+var podobi=document.getElementById("podobi");
+var name=document.getElementById("name");
+var mobile=document.getElementById("mobile");
+var mobile=document.getElementById("mobile");
+var tR=document.getElementById("tR");
+var footer=document.querySelector(".footer");
+//.....variable call end from page.....
+//......search button start..........
+  var hideShow=0;
+function findBrash(){
+  if(hideShow==1){
+  footer.style.display="block";
+  searchVal.style.display="none";
+  showResult.style.display="none"
+  division.style.display="block"
+    hideShow=0;
+  }else{
+  searchVal.style.display="block";
+  showResult.style.display="block";
+  footer.style.display="none";
+  division.style.display="none";
+  hideShow=1;
+  
+  }
+}
+//.......search button end........
+//.........search feild start.........
+function searchRslt() {
+  
+ var filter = searchVal.value;
+var ntR = document.getElementsByTagName("tr");
+  for (var i = 0; i < ntR.length; i++) {
+   var td = ntR[i].getElementsByTagName("td");
+  td[0].style.width="20%";
+  td[1].style.width="15%";
+  td[2].style.width="70%";
+  td[3].style.width="12%";
+    if (td[1]) {
+    var txtValue = td[1].textContent || td[1].innerText;
+      if (txtValue.indexOf(filter) > -1) {
+    ntR[i].style.display = "";
+      } else {
+       ntR[i].style.display = "none";
+      }
+    }       
+  }
+}
+//.......search feild end............
+
+
+
+let SHEET_ID = '12hryk15SGHBvHgK5jJQLUcc73J9zTiYqhBXo_sjVanA'
+let SHEET_TITLE = 'pom';
+let SHEET_RANGE = 'U3:X3000'
+
+let FULL_URL = ('https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?sheet=' + SHEET_TITLE + '&range=' + SHEET_RANGE);
+
+fetch(FULL_URL)
+.then(res => res.text())
+.then(rep => {
+    let data = JSON.parse(rep.substr(47).slice(0,-2));
+  
+  
+    let length = data.table.rows.length;
+    
+    for(let i = 0;i<length;i++){
+      var newTr= document.createElement("tr");
+ //.....................................
+ var newPodobi = document.createElement("td");
+  newTr.appendChild(newPodobi)
+  newPodobi.innerHTML = data.table.rows[i].c[0].v;
+         table.appendChild(newTr);
+//.........................................
+var newBrash = document.createElement("td");
+  newTr.appendChild(newBrash)
+  newBrash.innerHTML = data.table.rows[i].c[1].v;
+         table.appendChild(newTr);
+//...................................
+//.........................................
+var newName = document.createElement("td");
+  newTr.appendChild(newName)
+  newName.innerHTML = data.table.rows[i].c[2].v;
+         table.appendChild(newTr);
+//...................................
+//.........................................
+//data.table.rows[i].c[3].v;
+var newMobile =document.createElement("td");
+newTr.appendChild(newMobile);
+newMobile.innerHTML="<a  class='nmbr' href='tel:>"+data.table.rows[i].c[3].v+"'/a>"+'<i class="fa-solid fa-phone-flip"></i>';
+table.appendChild(newTr);
+//...................................
+
+    }
+ 
+})
+
+
+
+  </script>
+</body>
+</html>
